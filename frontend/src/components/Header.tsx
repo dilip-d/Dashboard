@@ -37,7 +37,7 @@ const Header: React.FC = () => {
         className="text-xl font-bold italic cursor-pointer"
         onClick={() => navigate("/")}
       >
-        Patient Management System
+        Healthcare Management System
       </h1>
       <button
         onClick={toggleMenu}
