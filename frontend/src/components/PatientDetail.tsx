@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchPatientById } from "../services/api";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import Button from "@mui/material/Button";
+import PriorAuthorizationForm from "./PriorAuthorizationForm";
 
 interface LabResult {
   testName: string;
@@ -25,6 +30,7 @@ const PatientDetail: React.FC = () => {
   const [patient, setPatient] = useState<Patient | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   useEffect(() => {
     const getPatientDetails = async () => {
@@ -120,6 +126,29 @@ const PatientDetail: React.FC = () => {
           )}
         </ul>
       </div>
+
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => setModalIsOpen(true)}
+        sx={{ marginTop: "20px" }}
+      >
+        Request Prior Authorization
+      </Button>
+
+      <Dialog open={modalIsOpen} onClose={() => setModalIsOpen(false)}>
+        <DialogContent>
+          <PriorAuthorizationForm
+            patientId={patient._id}
+            onClose={() => setModalIsOpen(false)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setModalIsOpen(false)} color="secondary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

@@ -73,8 +73,6 @@ export const updateAuthorizationStatus = async (
   const { id } = req.params;
   const { status } = req.body;
 
-  console.log("id, sta", id, status);
-
   try {
     const authorization = await Authorization.findByIdAndUpdate(
       id,

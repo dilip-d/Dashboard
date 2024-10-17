@@ -1,10 +1,13 @@
 import React from "react";
-import { useFormik } from "formik";
+import { useFormik, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import { submitPriorAuthorization } from "../services/api";
+import InputBlock from "./InputBlock";
+import { toast } from "react-hot-toast";
 
 interface PriorAuthorizationFormProps {
   patientId: string;
+  onClose: () => void;
 }
 
 interface FormValues {
@@ -18,6 +21,7 @@ interface FormValues {
 
 const PriorAuthorizationForm: React.FC<PriorAuthorizationFormProps> = ({
   patientId,
+  onClose,
 }) => {
   const formik = useFormik<FormValues>({
     initialValues: {
@@ -38,14 +42,18 @@ const PriorAuthorizationForm: React.FC<PriorAuthorizationFormProps> = ({
         .min(new Date(), "Date of service must be today or in the future")
         .required("Required"),
       diagnosisCode: Yup.string()
-        .matches(/^[A-Z0-9]+$/, "Diagnosis code must be alphanumeric")
+        .matches(/^[A-Za-z0-9]+$/, "Diagnosis code must be alphanumeric")
         .required("Required"),
     }),
-    onSubmit: async (values, { setSubmitting, setFieldError, resetForm }) => {
+    onSubmit: async (
+      values,
+      { setSubmitting, setFieldError, resetForm }: FormikHelpers<FormValues>
+    ) => {
       try {
         await submitPriorAuthorization({ ...values, patientId });
-        alert("Prior authorization request submitted successfully!");
+        toast.success("Request submitted successfully!");
         resetForm();
+        onClose();
       } catch (err: any) {
         setFieldError("general", err.message);
       } finally {
@@ -55,106 +63,109 @@ const PriorAuthorizationForm: React.FC<PriorAuthorizationFormProps> = ({
   });
 
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <h2 className="text-xl font-bold mb-4">Prior Authorization Request</h2>
+    <div className="p-6 bg-white rounded-lg">
+      <h2 className="text-2xl font-bold mb-4">Prior Authorization Request</h2>
       {formik.errors.general && (
-        <p className="text-red-500">{formik.errors.general}</p>
+        <p className="text-red-500 mb-4">{formik.errors.general}</p>
       )}
 
-      <div>
-        <label>Treatment Type:</label>
-        <input
-          type="text"
+      <form onSubmit={formik.handleSubmit}>
+        <InputBlock
+          label="Treatment Type"
           name="treatmentType"
           value={formik.values.treatmentType}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          className={`border rounded p-2 w-full ${
-            formik.touched.treatmentType && formik.errors.treatmentType
-              ? "border-red-500"
-              : ""
-          }`}
+          error={
+            formik.touched.treatmentType
+              ? formik.errors.treatmentType
+              : undefined
+          }
         />
-        {formik.touched.treatmentType && formik.errors.treatmentType ? (
-          <p className="text-red-500">{formik.errors.treatmentType}</p>
-        ) : null}
-      </div>
 
-      <div>
-        <label>Insurance Plan:</label>
-        <input
-          type="text"
+        <InputBlock
+          label="Insurance Plan"
           name="insurancePlan"
           value={formik.values.insurancePlan}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          className={`border rounded p-2 w-full ${
-            formik.touched.insurancePlan && formik.errors.insurancePlan
-              ? "border-red-500"
-              : ""
-          }`}
+          error={
+            formik.touched.insurancePlan
+              ? formik.errors.insurancePlan
+              : undefined
+          }
         />
-        {formik.touched.insurancePlan && formik.errors.insurancePlan ? (
-          <p className="text-red-500">{formik.errors.insurancePlan}</p>
-        ) : null}
-      </div>
 
-      <div>
-        <label>Date of Service:</label>
-        <input
-          type="date"
+        <InputBlock
+          label="Date of Service"
           name="dateOfService"
+          type="date"
           value={formik.values.dateOfService}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          className={`border rounded p-2 w-full ${
-            formik.touched.dateOfService && formik.errors.dateOfService
-              ? "border-red-500"
-              : ""
-          }`}
+          error={
+            formik.touched.dateOfService
+              ? formik.errors.dateOfService
+              : undefined
+          }
         />
-        {formik.touched.dateOfService && formik.errors.dateOfService ? (
-          <p className="text-red-500">{formik.errors.dateOfService}</p>
-        ) : null}
-      </div>
 
-      <div>
-        <label>Diagnosis Code:</label>
-        <input
-          type="text"
+        <InputBlock
+          label="Diagnosis Code"
           name="diagnosisCode"
           value={formik.values.diagnosisCode}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          className={`border rounded p-2 w-full ${
-            formik.touched.diagnosisCode && formik.errors.diagnosisCode
-              ? "border-red-500"
-              : ""
-          }`}
+          error={
+            formik.touched.diagnosisCode
+              ? formik.errors.diagnosisCode
+              : undefined
+          }
         />
-        {formik.touched.diagnosisCode && formik.errors.diagnosisCode ? (
-          <p className="text-red-500">{formik.errors.diagnosisCode}</p>
-        ) : null}
-      </div>
 
-      <div>
-        <label>Doctor's Notes:</label>
-        <textarea
+        <InputBlock
+          label="Doctor's Notes"
           name="doctorNotes"
+          isTextArea={true}
           value={formik.values.doctorNotes}
           onChange={formik.handleChange}
-          className="border rounded p-2 w-full"
+          onBlur={formik.handleBlur}
         />
-      </div>
 
-      <button
-        type="submit"
-        disabled={formik.isSubmitting}
-        className="bg-blue-500 text-white rounded py-2 px-4 mt-4"
-      >
-        {formik.isSubmitting ? "Submitting..." : "Submit"}
-      </button>
-    </form>
+        <button
+          type="submit"
+          disabled={formik.isSubmitting}
+          className="bg-blue-500 text-white rounded py-2 px-4 mt-4 hover:bg-blue-600 transition flex items-center justify-center"
+        >
+          {formik.isSubmitting ? (
+            <>
+              <svg
+                className="animate-spin h-5 w-5 mr-2 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                />
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 108 8"
+                />
+              </svg>
+            </>
+          ) : (
+            "Submit"
+          )}
+        </button>
+      </form>
+    </div>
   );
 };
 

@@ -79,28 +79,32 @@ const PatientList: React.FC = () => {
 
   return (
     <div className="p-4">
-      <h2 className="text-xl font-bold mb-4 text-center">Patient List</h2>
+      <h2 className="text-xl font-bold mb-4 text-center">PATIENT LIST</h2>
       <input
         type="text"
         placeholder="Search patients..."
-        className="p-2 mb-4 border rounded"
+        className="p-2 mb-4 border rounded w-full"
+        w-full
         value={search}
         onChange={handleSearch}
       />
       <div className="overflow-x-auto">
-        <table className="min-w-full border-collapse border border-gray-200">
+        <table className="min-w-full border-collapse border border-gray-500 bg-white">
           <thead>
             <tr className="bg-gray-200">
-              <th className="border border-gray-300 px-4 py-2 text-left">
+              <th className="border border-gray-300 px-4 py-2 text-center">
+                Patient ID
+              </th>
+              <th className="border border-gray-300 px-4 py-2 text-center">
                 Name
               </th>
-              <th className="border border-gray-300 px-4 py-2 text-left">
+              <th className="border border-gray-300 px-4 py-2 text-center">
                 Age
               </th>
-              <th className="border border-gray-300 px-4 py-2 text-left">
+              <th className="border border-gray-300 px-4 py-2 text-center">
                 Condition
               </th>
-              <th className="border border-gray-300 px-4 py-2 text-left">
+              <th className="border border-gray-300 px-4 py-2 text-center">
                 Actions
               </th>
             </tr>
@@ -108,16 +112,19 @@ const PatientList: React.FC = () => {
           <tbody>
             {currentPatients?.map((patient) => (
               <tr key={patient._id} className="hover:bg-gray-100">
+                <td className="border border-gray-300 px-4 py-2 font-bold text-center">
+                  {patient._id}
+                </td>
                 <td className="border border-gray-300 px-4 py-2">
                   {patient.name}
                 </td>
-                <td className="border border-gray-300 px-4 py-2">
+                <td className="border border-gray-300 px-4 py-2 text-center">
                   {patient.age}
                 </td>
                 <td className="border border-gray-300 px-4 py-2">
                   {patient.condition}
                 </td>
-                <td className="border border-gray-300 px-4 py-2">
+                <td className="border border-gray-300 px-4 py-2 text-center">
                   <button
                     className="text-blue-600 hover:underline"
                     onClick={() => navigate(`/patient/${patient?._id}`)}

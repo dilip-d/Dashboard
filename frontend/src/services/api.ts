@@ -40,6 +40,26 @@ export const fetchPatientById = async (patientId: string) => {
 };
 
 export const submitPriorAuthorization = async (data: any) => {
-  const response = await apiClient.post("/prior-authorization", data);
+  const response = await apiClient.post("/prior-authorizations", data);
+  return response.data;
+};
+
+export const fetchPriorAuthorizations = async (
+  offset: number,
+  limit: number
+) => {
+  const response = await apiClient.get(
+    `/prior-authorizations?offset=${offset}&limit=${limit}`
+  );
+  return response.data;
+};
+
+export const updateAuthorizationStatus = async (
+  id: string,
+  newStatus: String
+) => {
+  const response = await apiClient.put(`/prior-authorizations/status/${id}`, {
+    status: newStatus,
+  });
   return response.data;
 };

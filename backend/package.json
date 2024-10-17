@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "nodemon --watch src --ext ts --exec ts-node app.ts",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "start": "node dist/app.js",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
