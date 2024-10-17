@@ -27,6 +27,13 @@
    npm install
    ```
 
+## Environment Variables
+
+MONGO_URI="mongodb+srv://dilipdofficial:dilipd@cluster0.1h4e7.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+JWT_SECRET="12345"
+CLIENT_DOMAIN="http://localhost:3000"
+PORT=5000
+
 ## Testing the Application
 
 ### Testing the Frontend
