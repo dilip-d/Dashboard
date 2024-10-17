@@ -8,7 +8,11 @@ const AuthorizationSchema = new mongoose.Schema(
     dateOfService: { type: Date, required: true },
     diagnosisCode: { type: String, required: true },
     doctorNotes: { type: String },
-    status: { type: String, default: "pending" },
+    status: {
+      type: String,
+      enum: ["Pending", "Approved", "Denied"],
+      default: "Pending",
+    },
   },
   { timestamps: true }
 );

@@ -8,6 +8,6 @@ const router = Router();
 
 router.use("/api/auth", authRoutes);
 router.use("/api/patients", protect, patientRoutes);
-router.use("/api/authorizations", protect, authorizationRoutes);
+router.use("/api/prior-authorizations", protect, authorizationRoutes);
 
 export default router;
