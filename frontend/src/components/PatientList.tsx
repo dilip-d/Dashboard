@@ -37,8 +37,14 @@ const PatientList: React.FC = () => {
     fetchPatientsData(page, PatientsPerPage);
   }, [page]);
 
-  if (loading) return <p>Loading patients...</p>;
-  if (error) return <p>Error fetching patients: {error}</p>;
+  if (loading)
+    return <p className="text-center text-gray-600">Loading patients...</p>;
+  if (error)
+    return (
+      <p className="text-red-500 text-center">
+        Error fetching patients: {error}
+      </p>
+    );
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -126,7 +132,7 @@ const PatientList: React.FC = () => {
                 </td>
                 <td className="border border-gray-300 px-4 py-2 text-center">
                   <button
-                    className="text-blue-600 hover:underline"
+                    className="text-blue-600 hover:underline font-bold"
                     onClick={() => navigate(`/patient/${patient?._id}`)}
                   >
                     View Details

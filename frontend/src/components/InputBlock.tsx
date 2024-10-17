@@ -24,7 +24,7 @@ const InputBlock: React.FC<InputBlockProps> = ({
   isTextArea = false,
 }) => (
   <div className="mb-4">
-    <label className="block mb-1">{label}:</label>
+    <label className="block mb-1 font-bold">{label}:</label>
     {isTextArea ? (
       <textarea
         name={name}

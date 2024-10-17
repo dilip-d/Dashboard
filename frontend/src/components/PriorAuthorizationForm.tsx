@@ -64,7 +64,9 @@ const PriorAuthorizationForm: React.FC<PriorAuthorizationFormProps> = ({
 
   return (
     <div className="p-6 bg-white rounded-lg">
-      <h2 className="text-2xl font-bold mb-4">Prior Authorization Request</h2>
+      <h2 className="text-blue-600 text-2xl font-bold mb-4">
+        Prior Authorization Request
+      </h2>
       {formik.errors.general && (
         <p className="text-red-500 mb-4">{formik.errors.general}</p>
       )}
