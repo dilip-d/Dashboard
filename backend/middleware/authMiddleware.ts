@@ -1,12 +1,20 @@
 import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
-import User from "../models/User";
+import User, { IUser } from "../models/User";
+
+interface CustomRequest extends Request {
+  user?: IUser;
+}
 
 interface DecodedToken {
   id: string;
 }
 
-const protect = async (req: Request, res: Response, next: NextFunction) => {
+const protect = async (
+  req: CustomRequest,
+  res: Response,
+  next: NextFunction
+) => {
   let token;
 
   if (
@@ -21,7 +29,7 @@ const protect = async (req: Request, res: Response, next: NextFunction) => {
         process.env.JWT_SECRET as string
       ) as DecodedToken;
 
-      //   req.user = await User.findById(decoded.id).select("-password");
+      req.user = await User.findById(decoded.id).select("-password");
       next();
     } catch (error) {
       res.status(401).json({ message: "Not authorized, token failed" });

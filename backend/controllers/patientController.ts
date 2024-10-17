@@ -7,10 +7,17 @@ export const getPatients = async (
   next: NextFunction
 ) => {
   try {
-    const patients = await Patient.find();
-    console.log(patients);
+    const { offset = 0, limit = 10 } = req.query;
+    const patients = await Patient.find()
+      .skip(Number(offset))
+      .limit(Number(limit));
 
-    res.json(patients);
+    const totalPatients = await Patient.countDocuments();
+
+    res.json({
+      total: totalPatients,
+      data: patients,
+    });
   } catch (error) {
     next({ message: "Error fetching patients.", error });
   }

@@ -1,3 +1,4 @@
+// App.tsx
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
@@ -5,17 +6,43 @@ import PatientList from "./components/PatientList";
 import PatientDetail from "./components/PatientDetail";
 import Login from "./components/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
+import PublicRoute from "./components/PublicRoute";
+import Layout from "./components/Layout";
+
 const App: React.FC = () => {
   return (
     <AuthProvider>
       <Router>
-        <div className="container mx-auto p-4">
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <ProtectedRoute path="/" element={<PatientList />} />
-            <ProtectedRoute path="/patient/:id" element={<PatientDetail />} />
-          </Routes>
-        </div>
+        <Layout>
+          <div className="container mx-auto p-4">
+            <Routes>
+              <Route
+                path="/login"
+                element={
+                  <PublicRoute>
+                    <Login />
+                  </PublicRoute>
+                }
+              />
+              <Route
+                path="/"
+                element={
+                  <ProtectedRoute>
+                    <PatientList />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/patient/:id"
+                element={
+                  <ProtectedRoute>
+                    <PatientDetail />
+                  </ProtectedRoute>
+                }
+              />
+            </Routes>
+          </div>
+        </Layout>
       </Router>
     </AuthProvider>
   );

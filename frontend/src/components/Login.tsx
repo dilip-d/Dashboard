@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { loginUser } from "../services/api";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext"; // Importing useAuth
+import { useAuth } from "../hooks/useAuth";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-  const { login } = useAuth(); // Using the login function from AuthContext
+  const { login } = useAuth();
 
   const validateEmail = (email: string) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -42,8 +42,8 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
+    <div className="flex items-center justify-center h-83vh">
+      <div className="w-full max-w-md p-6 bg-gray-300 rounded-lg shadow-md">
         <h2 className="mb-6 text-2xl font-bold text-center">Login</h2>
         {error && <p className="mb-4 text-red-500">{error}</p>}
         <form onSubmit={handleSubmit}>
@@ -88,14 +88,6 @@ const Login: React.FC = () => {
             Login
           </button>
         </form>
-        {/* 
-        <p className="mt-4 text-center text-gray-600">
-          Don't have an account?{" "}
-          <a href="/register" className="text-blue-600 hover:underline">
-            Register
-          </a>
-        </p> 
-        */}
       </div>
     </div>
   );
