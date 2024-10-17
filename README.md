@@ -120,28 +120,27 @@ Registers a new user.
 
 #### Request Body:
 
-````json
+```json
 {
   "name": "string",
   "email": "string",
   "password": "string"
 }
-
+```
 
 ### 2. User Login
 
 **POST** `/auth/login`
 Authenticates a user and returns a JWT token.
 
-
 #### Request Body
 
 ```json
 {
-"email": "user@example.com",
-"password": "your_password"
+  "email": "user@example.com",
+  "password": "your_password"
 }
-
+```
 
 ## Patient Routes (Protected)
 
@@ -150,33 +149,29 @@ Authenticates a user and returns a JWT token.
 **GET** `/patients`
 Retrieves a list of all patients.
 
-
 ### 2. Get Patient by ID
 
 **GET** `/patients/:id`
 Retrieves a specific patient by ID.
-
 
 ### 3. Create Authorization
 
 **POST** `/prior-authorizations`
 Creates a new prior authorization request.
 
-
 #### Request Body:
 
 ```json
 {
-"patientId": "patientId",
-"details": "Authorization details"
+  "patientId": "patientId",
+  "details": "Authorization details"
 }
-
+```
 
 ### 4. Get All Authorizations
 
 **GET** `/prior-authorizations`
 Retrieves a list of all prior authorizations.
-
 
 ### 5. Get Authorization by Patient ID
 
@@ -192,7 +187,6 @@ Updates the status of a specific authorization.
 
 ```json
 {
-"status": "Approved" // or "Denied"
+  "status": "Approved" // or "Denied"
 }
-
-````
+```
