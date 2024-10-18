@@ -144,6 +144,8 @@ Authenticates a user and returns a JWT token.
 
 ## Patient Routes (Protected)
 
+### Note : Add token to the bearer for endpoints
+
 ### 1. Get All Patients
 
 **GET** `/patients?offset=0&limit=10`
