@@ -146,7 +146,7 @@ Authenticates a user and returns a JWT token.
 
 ### 1. Get All Patients
 
-**GET** `/patients`
+**GET** `/patients?offset=0&limit=10`
 Retrieves a list of all patients.
 
 ### 2. Get Patient by ID
@@ -170,7 +170,7 @@ Creates a new prior authorization request.
 
 ### 4. Get All Authorizations
 
-**GET** `/prior-authorizations`
+**GET** `/prior-authorizations?offset=0&limit=10`
 Retrieves a list of all prior authorizations.
 
 ### 5. Get Authorization by Patient ID
